@@ -8,6 +8,12 @@ class files(models.Model):
     #make folder attribute by yourself
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
+#parameters_add
+# institution(url parse)
+# url
+# title_actual
+# published date
+#1at 5 pages preview
 
 
 

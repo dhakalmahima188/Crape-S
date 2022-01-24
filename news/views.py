@@ -11,66 +11,6 @@ from PyPDF2 import PdfFileReader, PdfFileWriter
 
 
 
-def language(filepath):
-    from langdetect import detect
-    from pdfminer3.layout import LAParams
-    from pdfminer3.pdfpage import PDFPage
-    from pdfminer3.pdfinterp import PDFResourceManager
-    from pdfminer3.pdfinterp import PDFPageInterpreter
-    from pdfminer3.converter import TextConverter
-    import io
-    i=0
-    resource_manager = PDFResourceManager()
-    fake_file_handle = io.StringIO()
-    converter = TextConverter(resource_manager, fake_file_handle, laparams=LAParams())
-    page_interpreter = PDFPageInterpreter(resource_manager, converter)
-
-    with open(filepath, 'rb') as fh:
-
-        for page in PDFPage.get_pages(fh,
-                                    caching=True,
-                                    check_extractable=True):
-            page_interpreter.process_page(page)
-
-        texts = fake_file_handle.getvalue()
-    
-
-    # close open handles
-    converter.close()
-    fake_file_handle.close()
-
-    # print(text)
-    special_characters = "!@#$%^&*()-+?_=,<>/[]{}|\~`"
-    # texts="My name %5 मेरो नाम महिमा ढकाल हो |"
-    j=0
-    n_count=0
-    e_count=0
-   
-    text=texts.split(' ')
-    # print(text)
-    for txt in text:
-        txt=text[j]
-        if any(c in special_characters for c in txt) or  txt.isnumeric()==True :       
-            # print(txt) 
-            
-            j=j+1     
-            
-            continue
-        else:
-            if(len(txt)>=5 and len(txt)<=10):
-                # print(txt)
-                if (detect(txt)=='ne' or detect(txt)=='hi'):
-                    n_count=n_count+1
-                else:
-                    e_count=e_count+1   
-        j=j+1  
-    # print("Nepali:", n_count)
-    # print("English:" ,e_count) 
-    if(n_count>e_count):
-       return "Nepali"
-    else:
-       return "English" 
-
 
 
 list=[]
@@ -144,8 +84,8 @@ for url in urls:
                 f_date=date[0:4]+"-"+date[4:6]+"-"+date[6:8]+" "+date[8:10]+":"+date[10:12]+":"+date[12:14]
             print("date",f_date)
 
-            language_OF_file=language(filepath)
-            # language_OF_file='NOt recognized'
+            # language_OF_file=language(filepath)
+            language_OF_file='NOt recognized'
             file2=files(title=file_in_db,creation_date=f_date,institution=directory,url=url,language=language_OF_file)        
           
             file2.save()

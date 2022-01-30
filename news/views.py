@@ -38,35 +38,37 @@ def date(filepath):
     except RuntimeError:
       pass
 def language(texts):
-    special_characters = "!@#$%^&*()-+?_=,<>/[]{}|\~`"     
-    j=0
-    n_count=0
-    e_count=0
-   
-    text=texts.split(' ')
-    # print(text)
-    for txt in text:
-        txt=text[j]
-        if any(c in special_characters for c in txt) or  txt.isnumeric()==True :       
-            # print(txt) 
-            
-            j=j+1     
-            
-            continue
-        else:
-            if(len(txt)>=2 and len(txt)<=10):
-                # print(txt)
-                if (detect(txt)=='ne' or detect(txt)=='hi'):
-                    n_count=n_count+1
-                else:
-                    e_count=e_count+1   
-        j=j+1  
-    # print("Nepali:", n_count)
-    # print("English:" ,e_count) 
-    if(n_count>e_count):
-       return "Nepali"
-    else:
-       return "English" 
+   special_characters = "!@#$%^&*()-+?_=,<>/[]{}|\~`"     
+   j=0
+   n_count=0
+   e_count=0
+   try:
+     text=texts.split(' ')
+     # print(text)
+     for txt in text:
+         txt=text[j]
+         if any(c in special_characters for c in txt) or  txt.isnumeric()==True :       
+             # print(txt) 
+             
+             j=j+1     
+             
+             continue
+         else:
+             if(len(txt)>=3):
+                 # print(txt)
+                 if (detect(txt)=='ne' or detect(txt)=='hi'):
+                     n_count=n_count+1
+                 else:
+                     e_count=e_count+1   
+         j=j+1  
+     # print("Nepali:", n_count)
+     # print("English:" ,e_count) 
+     if(n_count>e_count):
+        return "Nepali"
+     else:
+        return "English" 
+   except:
+        pass
 
 
 
@@ -97,13 +99,21 @@ for url in urls:
     i=0
     for link in soup.select("a[href$='.pdf']"):
         a_title=link.parent.contents[0].text
+        a_link=link.get('href')
+        print(a_link)
         print(a_title)
+        # print(link['href'])
      
         
         file_actual=os.path.join(folder_location,link['href'])
         filename = os.path.join(folder_location,link['href'].split('/')[-1])
         print(file_actual)
-        # try:
+        try:
+            department=soup.find('title').text
+            # print(department)
+        except AttributeError:
+            department=''       
+
         #  tag=soup.find_all("div", {"class": "text"})[i]
         #  print(" ")
         #  print(tag.find('a').contents)
@@ -129,7 +139,7 @@ for url in urls:
             # language_OF_file=language(filepath)
             language_OF_file=language(a_title)
             print(language_OF_file)
-            file2=files(title=a_title,fullfile=file_in_db,creation_date=f_date,institution=directory,url=file_actual,language=language_OF_file)        
+            file2=files(title=a_title,fullfile=file_in_db,creation_date=f_date,institution=department,url=a_link,language=language_OF_file)        
           
             file2.save()
      

@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class files(models.Model):
     title = models.CharField(max_length=200)
-    fullfile = models.CharField()
+    fullfile = models.CharField(max_length=1000)
     file = models.BinaryField()
     institution=models.CharField(max_length=200)
     url=models.CharField(max_length=200)

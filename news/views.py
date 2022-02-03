@@ -22,7 +22,7 @@ urls = ['http://mohp.gov.np/', 'http://nepalindata.com/resource/category/laws-po
         'http://www.dotm.gov.np/', 'http://mofa.gov.np/', 'http://www.dop.gov.np/', 'http://ciaa.gov.np/','http://www.gatsby.ucl.ac.uk/teaching/courses/ml1-2016.html']
 # i=0
 
-# urls=['http://mohp.gov.np/']
+# urls=['https://docs.flutter.dev/get-started/install/windows']
 def date(filepath):
     try:
       pdf=fitz.open(filepath)
@@ -97,53 +97,213 @@ for url in urls:
     except requests.exceptions.SSLError:
         pass 
     i=0
-    for link in soup.select("a[href$='.pdf']"):
-        a_title=link.parent.contents[0].text
-        a_link=link.get('href')
-        print(a_link)
-        print(a_title)
-        # print(link['href'])
-     
+
+    def pdf():
+        for link in soup.select("a[href$='.pdf']"):
+            print(directory)
+            a_title=link.parent.contents[0].text
+            a_link=link.get('href')
+            print(a_link)
+            print(a_title)
+            # print(link['href'])
         
-        file_actual=os.path.join(folder_location,link['href'])
-        filename = os.path.join(folder_location,link['href'].split('/')[-1])
-        print(file_actual)
-        try:
-            department=soup.find('title').text
-            # print(department)
-        except AttributeError:
-            department=''       
-
-        #  tag=soup.find_all("div", {"class": "text"})[i]
-        #  print(" ")
-        #  print(tag.find('a').contents)
-        # except AttributeError:
-        #     pass
-        # i=i+1  
-        try:
-         with open(filename, 'wb') as f:
             
-            file_in_db=os.path.join(directory,filename)
-            b_name=os.path.basename(filename)
-            file_in_db=os.path.join(directory,b_name)          
-           
-            f.write(requests.get(urljoin(url,link['href'])).content)
-            f.close()
+            file_actual=os.path.join(folder_location,link['href'])
+            filename = os.path.join(folder_location,link['href'].split('/')[-1])
+            print(file_actual)
+            try:
+                department=soup.find('title').text
+                print(department)
+            except AttributeError:
+                department=''       
+
+            #  tag=soup.find_all("div", {"class": "text"})[i]
+            #  print(" ")
+            #  print(tag.find('a').contents)
+            # except AttributeError:
+            #     pass
+            # i=i+1  
+            try:
+             with open(filename, 'wb') as f:
+                print(directory)
+                
+                file_in_db=os.path.join(directory,filename)
+                b_name=os.path.basename(filename)
+                file_in_db=os.path.join(directory,b_name)          
             
+                f.write(requests.get(urljoin(url,link['href'])).content)
+                f.close()
+                
 
-            #changes IN TITLE
-            filepath=os.path.join(drive,folder,directory,b_name)
-            # i=i+1
-            f_date=date(filepath)
+                #changes IN TITLE
+                filepath=os.path.join(drive,folder,directory,b_name)
+                # i=i+1
+                f_date=date(filepath)
 
-            # language_OF_file=language(filepath)
-            language_OF_file=language(a_title)
-            print(language_OF_file)
-            file2=files(title=a_title,fullfile=file_in_db,creation_date=f_date,institution=department,url=a_link,language=language_OF_file)        
-          
-            file2.save()
-     
-        except requests.exceptions.Timeout: 
-             pass
+                # language_OF_file=language(filepath)
+                language_OF_file=language(a_title)
+                # print(language_OF_file)
+                file2=files(title=a_title,fullfile=file_in_db,creation_date=f_date,institution=department,url=a_link,language=language_OF_file)        
+            
+                file2.save()
+        
+            except requests.exceptions.Timeout: 
+                pass
+    def zip():
+        for link in soup.select("a[href$='.zip']"):
+            print(directory)
+            a_title=link.parent.contents[0].text
+            a_link=link.get('href')
+            print(a_link)
+            print(a_title)
+            # print(link['href'])
+        
+            
+            file_actual=os.path.join(folder_location,link['href'])
+            filename = os.path.join(folder_location,link['href'].split('/')[-1])
+            print(file_actual)
+            try:
+                department=soup.find('title').text
+                print(department)
+            except AttributeError:
+                department=''       
 
+            #  tag=soup.find_all("div", {"class": "text"})[i]
+            #  print(" ")
+            #  print(tag.find('a').contents)
+            # except AttributeError:
+            #     pass
+            # i=i+1  
+            try:
+             with open(filename, 'wb') as f:
+                print(directory)
+                
+                file_in_db=os.path.join(directory,filename)
+                b_name=os.path.basename(filename)
+                file_in_db=os.path.join(directory,b_name)          
+            
+                f.write(requests.get(urljoin(url,link['href'])).content)
+                f.close()
+                
 
+                #changes IN TITLE
+                filepath=os.path.join(drive,folder,directory,b_name)
+                # i=i+1
+                f_date=date(filepath)
+
+                # language_OF_file=language(filepath)
+                language_OF_file=language(a_title)
+                # print(language_OF_file)
+                file2=files(title=a_title,fullfile=file_in_db,creation_date=f_date,institution=department,url=a_link,language=language_OF_file)        
+            
+                file2.save()
+        
+            except requests.exceptions.Timeout: 
+                pass
+    def pptx():
+         for link in soup.select("a[href$='.pptx']"):
+            print(directory)
+            a_title=link.parent.contents[0].text
+            a_link=link.get('href')
+            print(a_link)
+            print(a_title)
+            # print(link['href'])
+        
+            
+            file_actual=os.path.join(folder_location,link['href'])
+            filename = os.path.join(folder_location,link['href'].split('/')[-1])
+            print(file_actual)
+            try:
+                department=soup.find('title').text
+                print(department)
+            except AttributeError:
+                department=''       
+
+            #  tag=soup.find_all("div", {"class": "text"})[i]
+            #  print(" ")
+            #  print(tag.find('a').contents)
+            # except AttributeError:
+            #     pass
+            # i=i+1  
+            try:
+             with open(filename, 'wb') as f:
+                print(directory)
+                
+                file_in_db=os.path.join(directory,filename)
+                b_name=os.path.basename(filename)
+                file_in_db=os.path.join(directory,b_name)          
+            
+                f.write(requests.get(urljoin(url,link['href'])).content)
+                f.close()
+                
+
+                #changes IN TITLE
+                filepath=os.path.join(drive,folder,directory,b_name)
+                # i=i+1
+                f_date=date(filepath)
+
+                # language_OF_file=language(filepath)
+                language_OF_file=language(a_title)
+                # print(language_OF_file)
+                file2=files(title=a_title,fullfile=file_in_db,creation_date=f_date,institution=department,url=a_link,language=language_OF_file)        
+            
+                file2.save()
+        
+            except requests.exceptions.Timeout: 
+                pass
+    def image():
+
+         
+        for link in soup.select("img[src]"):
+            print(directory)
+            a_title=link.parent.contents[0].text
+            a_link=link.get('src')
+            print(a_link)
+            print(a_title)
+            # print(link['href'])
+        
+            
+            file_actual=os.path.join(folder_location,link['src'])
+            filename = os.path.join(folder_location,link['src'].split('/')[-1])
+            print(file_actual)
+            try:
+                department=soup.find('title').text
+                print(department)
+            except AttributeError:
+                department=''       
+
+            #  tag=soup.find_all("div", {"class": "text"})[i]
+            #  print(" ")
+            #  print(tag.find('a').contents)
+            # except AttributeError:
+            #     pass
+            # i=i+1  
+            try:
+             with open(filename, 'wb') as f:
+                print(directory)
+                
+                file_in_db=os.path.join(directory,filename)
+                b_name=os.path.basename(filename)
+                file_in_db=os.path.join(directory,b_name)          
+            
+                f.write(requests.get(urljoin(url,link['src'])).content)
+                f.close()
+                
+
+                #changes IN TITLE
+                filepath=os.path.join(drive,folder,directory,b_name)
+                # i=i+1
+                f_date=date(filepath)
+
+                # language_OF_file=language(filepath)
+                language_OF_file=language(a_title)
+                # print(language_OF_file)
+                file2=files(title=a_title,fullfile=file_in_db,creation_date=f_date,institution=department,url=a_link,language=language_OF_file)        
+            
+                file2.save()
+        
+            except requests.exceptions.Timeout: 
+                pass
+    # pdf()
+    zip()
+    image()

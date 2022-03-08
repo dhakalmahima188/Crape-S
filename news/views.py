@@ -10,14 +10,20 @@ import fitz
 from urllib3.exceptions import NewConnectionError
 from langdetect import detect
 
-import  PyPDF2
+
+import PyPDF2
 list = []
 
-urls = [      'http://mohp.gov.np/', 'http://nepalindata.com/resource/category/laws-policies-and-strategies/', 'http://nepalconsular.gov.np/np/',
-        'http://www.dotm.gov.np/', 'http://mofa.gov.np/', 'http://www.dop.gov.np/', 'http://ciaa.gov.np/', "https://mod.gov.np/",
-        "http://moe.gov.np/",      "https://mohp.gov.np/en",      "https://www.moud.gov.np/",        "https://moys.gov.np/",     "https://www.nepal.gov.np/",
-        "http://www.mopit.gov.np/",        "https://www.mof.gov.np/",     "https://www.moald.gov.np/",        "http://www.ntc.net.np/",        "http://www.nitc.gov.np/",         "http://www.nepalairlines.com.np",        "http://www.cca.gov.np/"]
-# i=0
+# urls = ['http://mohp.gov.np/', 'http://nepalindata.com/resource/category/laws-policies-and-strategies/', 'http://nepalconsular.gov.np/np/',
+#         'http://www.dotm.gov.np/', 'http://mofa.gov.np/', 'http://www.dop.gov.np/', 'http://ciaa.gov.np/', "https://mod.gov.np/",
+#         "http://moe.gov.np/",      "https://mohp.gov.np/en",      "https://www.moud.gov.np/",        "https://moys.gov.np/",     "https://www.nepal.gov.np/",
+#         "http://www.mopit.gov.np/",        "https://www.mof.gov.np/",     "https://www.moald.gov.np/",        "http://www.ntc.net.np/",        "http://www.nitc.gov.np/",         "http://www.nepalairlines.com.np",        "http://www.cca.gov.np/"]
+
+
+urls = ['http://mohp.gov.np/',  'http://nepalconsular.gov.np/np/',
+        'http://www.dotm.gov.np/', 'http://mofa.gov.np/',
+
+        ]
 
 # urls=['https://docs.flutter.dev/get-started/install/windows']
 
@@ -99,7 +105,7 @@ for url in urls:
             print(directory)
             a_title = link.parent.contents[0].text
             a_link = link.get('href')
-          
+
             print(a_title)
             # print(link['href'])
 
@@ -112,18 +118,14 @@ for url in urls:
                 print(department)
             except AttributeError:
                 department = ''
-         
+
             # pdfFileObj = open(filename, 'rb')
             # pdfReader = PyPDF2.PdfFileReader(pdfFileObj)
-            # print(pdfReader.numPages) 
-            # for i in range(pdfReader.numPages):  
-            #     pageObj = pdfReader.getPage(i) 
-            #     print(pageObj.extractText()) 
+            # print(pdfReader.numPages)
+            # for i in range(pdfReader.numPages):
+            #     pageObj = pdfReader.getPage(i)
+            #     print(pageObj.extractText())
 
-          
-          
-          
-          
             try:
                 with open(filename, 'wb') as f:
                     print(directory)
@@ -148,7 +150,7 @@ for url in urls:
 
                     file2.save()
 
-            except (requests.exceptions.Timeout,FileNotFoundError,OSError) as e:
+            except (requests.exceptions.Timeout, FileNotFoundError, OSError) as e:
                 pass
 
     def zip():
@@ -200,7 +202,7 @@ for url in urls:
 
                     file2.save()
 
-            except (requests.exceptions.Timeout,FileNotFoundError) as e:
+            except (requests.exceptions.Timeout, FileNotFoundError) as e:
                 pass
 
     def pptx():
@@ -246,7 +248,7 @@ for url in urls:
 
                     file2.save()
 
-            except (requests.exceptions.Timeout,FileNotFoundError) as e:
+            except (requests.exceptions.Timeout, FileNotFoundError) as e:
                 pass
 
     def image():
@@ -294,7 +296,7 @@ for url in urls:
 
                         file2.save()
 
-                except (requests.exceptions.Timeout,FileNotFoundError,OSError) as e:
+                except (requests.exceptions.Timeout, FileNotFoundError, OSError) as e:
                     pass
         except FileNotFoundError:
             pass
@@ -302,3 +304,9 @@ for url in urls:
     zip()
     pptx()
     image()
+
+
+def search(request):
+    user_list = files.objects.all()
+    user_filter = UserFilter(request.GET, queryset=user_list)
+    return render(request, {'filter': user_filter})

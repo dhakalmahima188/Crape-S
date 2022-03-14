@@ -13,10 +13,11 @@ from langdetect import detect
 import  PyPDF2
 list = []
 
-urls = [      'http://mohp.gov.np/', 'http://nepalindata.com/resource/category/laws-policies-and-strategies/', 'http://nepalconsular.gov.np/np/',
+urls = [       'http://nepalindata.com/resource/category/laws-policies-and-strategies/',
+        'http://nepalconsular.gov.np/np/',
         'http://www.dotm.gov.np/', 'http://mofa.gov.np/', 'http://www.dop.gov.np/', 'http://ciaa.gov.np/', "https://mod.gov.np/",
         "http://moe.gov.np/",      "https://mohp.gov.np/en",      "https://www.moud.gov.np/",        "https://moys.gov.np/",     "https://www.nepal.gov.np/",
-        "http://www.mopit.gov.np/",        "https://www.mof.gov.np/",     "https://www.moald.gov.np/",        "http://www.ntc.net.np/",        "http://www.nitc.gov.np/",         "http://www.nepalairlines.com.np",        "http://www.cca.gov.np/"]
+        "http://www.mopit.gov.np/",        "https://www.mof.gov.np/",     "https://www.moald.gov.np/",        "http://www.ntc.net.np/", "http://www.nitc.gov.np/","http://www.nepalairlines.com.np", 'http://mohp.gov.np/']
 # i=0
 
 # urls=['https://docs.flutter.dev/get-started/install/windows']
